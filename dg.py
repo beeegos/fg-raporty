@@ -133,20 +133,29 @@ def generate_dg_pdf(date_str, address, object_num, work_df, materials_counts, st
 st.title("📝 Raport Deutsche Glasfaser")
 st.markdown("Generator PDF na podstawie wzoru `T DG 3`.")
 
-# Sidebar - Dane ogólne
-with st.sidebar:
-    st.header("Dane Projektu")
-    report_date = st.date_input("Data (Datum)", datetime.now())
-    address = st.text_input("Adres (Adresse)", "Musterstraße 1")
-    obj_num = st.text_input("Numer Obiektu (Obiekt Nummer)", "12345")
+# --- DANE WEJŚCIOWE (NA GŁÓWNYM EKRANIE) ---
+
+# Używamy st.expander, żeby można było zwinąć te dane jak już je wpiszesz
+with st.expander("🏗️ Dane Projektu i Pracownika", expanded=True):
     
-    st.divider()
-    st.header("Pracownik")
+    st.write("--- DANE PROJEKTU ---")
+    col_proj_1, col_proj_2 = st.columns(2)
+    with col_proj_1:
+        report_date = st.date_input("Data (Datum)", datetime.now())
+        obj_num = st.text_input("Numer Obiektu", "12345")
+    with col_proj_2:
+        address = st.text_input("Adres (Adresse)", "Musterstraße 1")
+
+    st.write("--- PRACOWNIK ---")
     staff_name = st.text_input("Imię i Nazwisko", "Jan Nowak")
-    c1, c2, c3 = st.columns(3)
-    start = c1.time_input("Start", value=None)
-    brk = c2.text_input("Pauza", "0")
-    end = c3.time_input("Koniec", value=None)
+    
+    col_time_1, col_time_2, col_time_3 = st.columns(3)
+    with col_time_1:
+        start = st.time_input("Start", value=None)
+    with col_time_2:
+        brk = st.text_input("Pauza", "0")
+    with col_time_3:
+        end = st.time_input("Koniec", value=None)
 
 # --- GŁÓWNA CZĘŚĆ ---
 
